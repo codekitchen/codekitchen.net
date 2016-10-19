@@ -113,7 +113,7 @@ export default class Grid {
   backgroundColorFor(cell) {
     if (this.distances && this.distances.get(cell) !== undefined) {
       let distance = this.distances.get(cell)
-      var max = this.distances.maxDistance()
+      var max = this.distances.maxDistance
       if (max === 0)
         max = 1
 

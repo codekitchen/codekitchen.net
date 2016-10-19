@@ -2,6 +2,7 @@ export default class Distances {
   constructor(root) {
     this.root = root
     this.cells = {}
+    this.maxDistance = 0
     this.set(root, 0)
   }
 
@@ -14,6 +15,8 @@ export default class Distances {
   }
 
   set(cell, distance) {
+    if (distance > this.maxDistance)
+      this.maxDistance = distance
     this.cells[this.cellKey(cell)] = distance
   }
 
@@ -43,9 +46,5 @@ export default class Distances {
     }
 
     return path
-  }
-
-  maxDistance() {
-    return Math.max(...Object.values(this.cells))
   }
 }

@@ -13,7 +13,8 @@ export default function canvas2d(grid, ctx, cellSize = 20) {
 }
 
 function renderCell(grid, ctx, cell, cellSize) {
-  let [x, y] = cellPosition(cell, cellSize)
+  let x = cell.col * cellSize
+  let y = cell.row * cellSize
 
   let color = grid.backgroundColorFor(cell)
   if (color) {
@@ -39,11 +40,4 @@ function drawLine(ctx, x1, y1, x2, y2) {
   ctx.moveTo(x1, y1)
   ctx.lineTo(x2, y2)
   ctx.stroke()
-}
-
-function cellPosition(cell, cellSize) {
-  return [
-    cell.col * cellSize,
-    cell.row * cellSize
-  ]
 }
