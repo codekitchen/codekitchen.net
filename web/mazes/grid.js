@@ -19,6 +19,10 @@ class Cell {
     return this.links.indexOf(otherCell) >= 0
   }
 
+  neighbors() {
+    return _.compact([this.north, this.south, this.east, this.west])
+  }
+
   *distances() {
     let distances = new Distances(this)
     var frontier = [this]
@@ -104,6 +108,10 @@ export default class Grid {
       cell.west  = this.get(row, col-1)
       cell.east  = this.get(row, col+1)
     }
+  }
+
+  randomCell() {
+    return this.get(_.random(0, this.rows-1), _.random(0, this.cols-1))
   }
 
   contentsOf(cell) {

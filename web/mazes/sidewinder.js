@@ -1,4 +1,3 @@
-import Grid from './grid.js'
 import _ from 'underscore'
 
 export default class Sidewinder {

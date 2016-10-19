@@ -1,7 +1,7 @@
 import _ from 'underscore'
 
 import Grid from './mazes/grid.js'
-import RandomWalk from './mazes/random_walk.js'
+import GENERATORS from './mazes/generators.js'
 import canvas2d from './mazes/canvas2d.js'
 
 import './main.css'
@@ -10,16 +10,19 @@ let MIN_CELL_SIZE = 25
 
 let canvas = document.getElementById('grid')
 let box = document.getElementById('box')
-let cols = Math.min(60, Math.floor(box.clientWidth / MIN_CELL_SIZE))
-let rows = Math.min(60, Math.floor(box.clientHeight / MIN_CELL_SIZE))
-let cellSize = Math.floor(Math.min(box.clientWidth / cols, box.clientHeight / rows))
-canvas.width = cols * cellSize
-canvas.height = rows * cellSize
 let ctx = canvas.getContext("2d")
 
 function doMaze() {
+  let cols = Math.min(60, Math.floor(box.clientWidth / MIN_CELL_SIZE))
+  let rows = Math.min(60, Math.floor(box.clientHeight / MIN_CELL_SIZE))
+  let cellSize = Math.floor(Math.min(box.clientWidth / cols, box.clientHeight / rows))
+  canvas.width = cols * cellSize
+  canvas.height = rows * cellSize
+
   var grid = new Grid(rows, cols)
-  RandomWalk.on(grid)
+  let generator = _.sample(GENERATORS)
+  console.log(generator.name)
+  generator.on(grid)
 
   var steps
 
@@ -34,7 +37,7 @@ function doMaze() {
     let distances = start.distancesFull()
     steps = distances.pathTo(grid.get(grid.rows - 1, grid.cols - 1))
   } else {
-    let start = grid.get(_.random(0, grid.rows-1), _.random(0, grid.cols-1))
+    let start = grid.randomCell()
     steps = start.distances()
   }
 
