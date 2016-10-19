@@ -10,8 +10,8 @@ let MIN_CELL_SIZE = 25
 
 let canvas = document.getElementById('grid')
 let box = document.getElementById('box')
-let cols = Math.min(30, Math.floor(box.clientWidth / MIN_CELL_SIZE))
-let rows = Math.min(30, Math.floor(box.clientHeight / MIN_CELL_SIZE))
+let cols = Math.min(60, Math.floor(box.clientWidth / MIN_CELL_SIZE))
+let rows = Math.min(60, Math.floor(box.clientHeight / MIN_CELL_SIZE))
 let cellSize = Math.floor(Math.min(box.clientWidth / cols, box.clientHeight / rows))
 canvas.width = cols * cellSize
 canvas.height = rows * cellSize
@@ -48,7 +48,7 @@ function doMaze() {
     grid.distances = step.value
     canvas2d(grid, ctx, cellSize)
 
-    setTimeout(doStep, 60)
+    setTimeout(doStep, 50)
   }
 
   doStep()
