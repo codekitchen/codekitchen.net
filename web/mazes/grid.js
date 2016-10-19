@@ -56,6 +56,7 @@ export default class Grid {
 
     this.hue = _.random(360)
     this.saturation = _.random(40, 100)
+    this.size = this.rows * this.cols
   }
 
   prepareGrid() {

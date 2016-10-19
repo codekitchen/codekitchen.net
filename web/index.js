@@ -1,7 +1,7 @@
 import _ from 'underscore'
 
 import Grid from './mazes/grid.js'
-import Sidewinder from './mazes/sidewinder.js'
+import RandomWalk from './mazes/random_walk.js'
 import canvas2d from './mazes/canvas2d.js'
 
 import './main.css'
@@ -19,7 +19,7 @@ let ctx = canvas.getContext("2d")
 
 function doMaze() {
   var grid = new Grid(rows, cols)
-  Sidewinder.on(grid)
+  RandomWalk.on(grid)
 
   var steps
 
