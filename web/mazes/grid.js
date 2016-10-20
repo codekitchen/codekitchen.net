@@ -120,6 +120,29 @@ export default class Grid {
     return this.get(_.random(0, this.rows-1), _.random(0, this.cols-1))
   }
 
+  deadends() {
+    let list = []
+    for (let cell of this.eachCell()) {
+      if (cell.links.length == 1)
+        list.push(cell)
+    }
+    return list
+  }
+
+  braid(p = 1.0) {
+    for (let cell of _.shuffle(this.deadends())) {
+      if (cell.links.length != 1 || Math.random() > p)
+        continue
+
+      let neighbors = _.filter(cell.neighbors(), n => !cell.linked(n))
+      var best = _.filter(neighbors, n => n.links.length == 1)
+      if (best.length == 0)
+        best = neighbors
+      let neighbor = _.sample(best)
+      cell.link(neighbor)
+    }
+  }
+
   contentsOf(cell) {
     return ' '
   }

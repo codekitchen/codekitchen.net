@@ -19,10 +19,17 @@ function doMaze() {
   canvas.width = cols * cellSize
   canvas.height = rows * cellSize
 
+  let mazeDesc = []
   var grid = new Grid(rows, cols)
   let generator = _.sample(GENERATORS)
-  console.log(generator.name)
+  mazeDesc.push(generator.name)
+  mazeDesc.push(`${rows}x${cols}`)
   generator.on(grid)
+  if (Math.random() > 0.6) {
+    let pval = Math.random()
+    grid.braid(pval)
+    mazeDesc.push(`braid: ${pval}`)
+  }
 
   var steps
 
@@ -36,10 +43,14 @@ function doMaze() {
     let start = grid.get(ystart, xstart)
     let distances = start.distancesFull()
     steps = distances.pathTo(grid.get(grid.rows - 1, grid.cols - 1))
+    mazeDesc.push('solving')
   } else {
     let start = grid.randomCell()
     steps = start.distances()
+    mazeDesc.push('filling')
   }
+
+  console.log(mazeDesc.join(' '))
 
   function doStep() {
     let step = steps.next()
