@@ -15,6 +15,12 @@ class Cell {
       cell.link(this, false)
   }
 
+  unlink(cell, bidi = true) {
+    this.links = _.without(this.links, cell)
+    if (bidi)
+      cell.unlink(this, false)
+  }
+
   linked(otherCell) {
     return this.links.indexOf(otherCell) >= 0
   }
