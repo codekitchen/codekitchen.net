@@ -1,27 +1,38 @@
+// @flow
 import _ from 'underscore'
 
 import Distances from './distances.js'
 
-class Cell {
-  constructor(row, col) {
+export class Cell {
+  row: number
+  col: number
+  links: Cell[]
+
+  north: ?Cell
+  south: ?Cell
+  east: ?Cell
+  west: ?Cell
+
+  constructor(row: number, col: number) {
     this.row = row
     this.col = col
     this.links = []
   }
 
-  link(cell, bidi = true) {
+  link(cell: Cell, bidi: bool = true) {
     this.links.push(cell)
     if (bidi)
       cell.link(this, false)
   }
 
-  unlink(cell, bidi = true) {
+  unlink(cell: ?Cell, bidi: bool = true) {
     this.links = _.without(this.links, cell)
-    if (bidi)
+    if (bidi && cell)
       cell.unlink(this, false)
   }
 
-  linked(otherCell) {
+  linked(otherCell: ?Cell) {
+    if (!otherCell) return false
     return this.links.indexOf(otherCell) >= 0
   }
 
@@ -29,7 +40,7 @@ class Cell {
     return _.compact([this.north, this.south, this.east, this.west])
   }
 
-  *distances() {
+  *distances() : Generator<Distances, Distances, void> {
     let distances = new Distances(this)
     var frontier = [this]
     while (frontier.length) {
@@ -57,16 +68,24 @@ class Cell {
   }
 }
 
-export default class Grid {
-  constructor(rows, cols) {
+export class Grid {
+  rows: number
+  cols: number
+  size: number
+  grid: Cell[][]
+  hue: number
+  saturation: number
+  distances: Distances
+
+  constructor(rows: number, cols: number) {
     this.rows = rows
     this.cols = cols
+    this.size = rows * cols
     this.grid = this.prepareGrid()
     this.configureCells()
 
     this.hue = _.random(360)
     this.saturation = _.random(40, 100)
-    this.size = this.rows * this.cols
   }
 
   prepareGrid() {
@@ -77,13 +96,13 @@ export default class Grid {
     })
   }
 
-  *eachRow() {
+  *eachRow(): Iterator<Cell[]> {
     for (let row of this.grid) {
       yield row
     }
   }
 
-  *eachCell() {
+  *eachCell(): Iterator<Cell> {
     for (let row of this.eachRow()) {
       for (let cell of row) {
         if (cell) {
@@ -93,11 +112,11 @@ export default class Grid {
     }
   }
 
-  rowSize(row) {
-    this.grid[row].length
+  rowSize(row: number) : number {
+    return this.grid[row].length
   }
 
-  get(row, col) {
+  get(row: number, col: number): ?Cell {
     if (row < 0 || row >= this.rows)
       return undefined
     if (col < 0 || col >= this.rowSize(row))
@@ -116,8 +135,8 @@ export default class Grid {
     }
   }
 
-  randomCell() {
-    return this.get(_.random(0, this.rows-1), _.random(0, this.cols-1))
+  randomCell(): Cell {
+    return (this.get(_.random(0, this.rows-1), _.random(0, this.cols-1)): any)
   }
 
   deadends() {
@@ -129,7 +148,7 @@ export default class Grid {
     return list
   }
 
-  braid(p = 1.0) {
+  braid(p: number = 1.0) {
     for (let cell of _.shuffle(this.deadends())) {
       if (cell.links.length != 1 || Math.random() > p)
         continue
@@ -143,11 +162,11 @@ export default class Grid {
     }
   }
 
-  contentsOf(cell) {
+  contentsOf(cell: Cell) {
     return ' '
   }
 
-  backgroundColorFor(cell) {
+  backgroundColorFor(cell: Cell) {
     if (this.distances && this.distances.get(cell) !== undefined) {
       let distance = this.distances.get(cell)
       var max = this.distances.maxDistance

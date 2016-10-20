@@ -1,6 +1,7 @@
+// @flow
 import _ from 'underscore'
 
-import Grid from './mazes/grid.js'
+import { Grid } from './mazes/grid.js'
 import GENERATORS from './mazes/generators.js'
 import canvas2d from './mazes/canvas2d.js'
 
@@ -8,7 +9,8 @@ import './main.css'
 
 let MIN_CELL_SIZE = 25
 
-let canvas = document.getElementById('grid')
+// trust that we know grid is a canvas element
+let canvas : HTMLCanvasElement = (document.getElementById('grid') : any)
 let box = document.getElementById('box')
 let ctx = canvas.getContext("2d")
 
@@ -41,6 +43,7 @@ function doMaze() {
     let ystart = _.random(-yjitter, yjitter) + centery
     let xstart = _.random(-xjitter, xjitter) + centerx
     let start = grid.get(ystart, xstart)
+    if (!start) return
     let distances = start.distancesFull()
     steps = distances.pathTo(grid.get(grid.rows - 1, grid.cols - 1))
     mazeDesc.push('solving')
@@ -60,6 +63,10 @@ function doMaze() {
     }
 
     grid.distances = step.value
+    if (!ctx) {
+      document.write("your browser does not support the HTML Canvas element")
+      throw "doh"
+    }
     canvas2d(grid, ctx, cellSize)
 
     setTimeout(doStep, 50)

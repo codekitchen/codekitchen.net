@@ -1,26 +1,33 @@
+// @flow
+import { Cell } from './grid.js'
+
 export default class Distances {
-  constructor(root) {
+  root: Cell
+  cells: { [key: string]: number }
+  maxDistance: number
+
+  constructor(root: Cell) {
     this.root = root
     this.cells = {}
     this.maxDistance = 0
     this.set(root, 0)
   }
 
-  cellKey(cell) {
+  cellKey(cell: Cell) {
     return `${cell.row},${cell.col}`
   }
 
-  get(cell) {
+  get(cell: Cell): number {
     return this.cells[this.cellKey(cell)]
   }
 
-  set(cell, distance) {
+  set(cell: Cell, distance: number) {
     if (distance > this.maxDistance)
       this.maxDistance = distance
     this.cells[this.cellKey(cell)] = distance
   }
 
-  *pathTo(goalCell) {
+  *pathTo(goalCell: Cell): Generator<Distances, Distances, void> {
     var current = goalCell
 
     let breadcrumbs = new Distances(this.root)

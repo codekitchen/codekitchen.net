@@ -1,4 +1,7 @@
+// @flow
 import _ from 'underscore'
+
+import { Grid } from './grid'
 
 function renderRow(grid, output, row) {
   output.push("|")
@@ -13,7 +16,7 @@ function renderRow(grid, output, row) {
   output.push("\n")
 }
 
-export default function ascii(grid) {
+export default function ascii(grid: Grid) {
   let output = []
   output.push("+")
   _.times(grid.cols, () => output.push("---+"))

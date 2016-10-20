@@ -1,6 +1,9 @@
+// @flow
 import _ from 'underscore'
 
-export default function canvas2d(grid, ctx, cellSize = 20) {
+import { Grid } from './grid.js'
+
+export default function canvas2d(grid: Grid, ctx: CanvasRenderingContext2D, cellSize: number = 20) {
   let width = cellSize * grid.cols
   let height = cellSize * grid.rows
 

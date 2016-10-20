@@ -1,8 +1,9 @@
-import Grid from './grid.js'
+// @flow
+import { Grid } from './grid.js'
 import _ from 'underscore'
 
 export default class RandomWalk {
-  static on(grid) {
+  static on(grid: Grid) {
     let cur = grid.randomCell()
     var unvisited = grid.size - 1
 

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2"
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +22,8 @@
     "style-loader": "^0.13.1",
     "underscore": "^1.8.3",
     "webpack": "^1.13.2"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.33.0"
   }
 }
