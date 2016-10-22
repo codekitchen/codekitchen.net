@@ -5,7 +5,7 @@ module.exports = {
     ],
     output: {
         path: __dirname + "/public",
-        filename: "mazes.js"
+        filename: "[name]/index.js"
     },
     module: {
         loaders: [
