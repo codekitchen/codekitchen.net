@@ -72,7 +72,7 @@ export class Grid {
   rows: number
   cols: number
   size: number
-  grid: Cell[][]
+  grid: Array<Cell[]>
   hue: number
   saturation: number
   distances: Distances
