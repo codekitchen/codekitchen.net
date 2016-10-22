@@ -1,8 +1,14 @@
 module.exports = {
-    entry: [
-      "babel-polyfill",
-      "./web/index.js"
-    ],
+    entry: {
+      mazes: [
+        "babel-polyfill",
+        "./web/index.js"
+      ],
+      gallery: [
+        "babel-polyfill",
+        "./web/gallery.js"
+      ]
+    },
     output: {
         path: __dirname + "/public",
         filename: "[name]/index.js"
