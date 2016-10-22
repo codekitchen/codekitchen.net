@@ -2,7 +2,7 @@ module.exports = {
     entry: {
       mazes: [
         "babel-polyfill",
-        "./web/index.js"
+        "./web/mazes.js"
       ],
       gallery: [
         "babel-polyfill",
