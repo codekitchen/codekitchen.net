@@ -4,22 +4,22 @@ import _ from 'underscore'
 import { Grid } from './grid.js'
 
 export default function canvas2d(grid: Grid, ctx: CanvasRenderingContext2D, cellSize: number = 20) {
-  let width = cellSize * grid.cols
-  let height = cellSize * grid.rows
+  const width = cellSize * grid.cols
+  const height = cellSize * grid.rows
 
   ctx.imageSmoothingEnabled = false
   ctx.clearRect(0, 0, width, height)
 
-  for (let cell of grid.eachCell()) {
+  for (const cell of grid.eachCell()) {
     renderCell(grid, ctx, cell, cellSize)
   }
 }
 
 function renderCell(grid, ctx, cell, cellSize) {
-  let x = cell.col * cellSize
-  let y = cell.row * cellSize
+  const x = cell.col * cellSize
+  const y = cell.row * cellSize
 
-  let color = grid.backgroundColorFor(cell)
+  const color = grid.backgroundColorFor(cell)
   if (color) {
     ctx.fillStyle = color
   } else {

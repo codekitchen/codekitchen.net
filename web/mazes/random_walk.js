@@ -5,7 +5,7 @@ import _ from 'underscore'
 export default class RandomWalk {
   static on(grid: Grid) {
     let cur = grid.randomCell()
-    var unvisited = grid.size - 1
+    let unvisited = grid.size - 1
 
     while (unvisited > 0) {
       let neighbor = _.sample(cur.neighbors())

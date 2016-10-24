@@ -20,8 +20,8 @@ export default class RecursiveDivision {
 
   run() {
     // link all cells
-    for (let cell of this.grid.eachCell()) {
-      for (let n of cell.neighbors()) {
+    for (const cell of this.grid.eachCell()) {
+      for (const n of cell.neighbors()) {
         cell.link(n, false)
       }
     }
@@ -46,13 +46,13 @@ export default class RecursiveDivision {
   }
 
   horizontal(row: number, col: number, height: number, width: number) {
-    let divideSouthOf = _.random(height-2)
-    let passageAt = _.random(width-1)
+    const divideSouthOf = _.random(height-2)
+    const passageAt = _.random(width-1)
 
-    for (var x = 0; x < width; ++x) {
+    for (let x = 0; x < width; ++x) {
       if (passageAt == x)
         continue
-      let cell = this.grid.get(row+divideSouthOf, col+x)
+      const cell = this.grid.get(row+divideSouthOf, col+x)
       if (cell)
         cell.unlink(cell.south)
     }
@@ -62,13 +62,13 @@ export default class RecursiveDivision {
   }
 
   vertical(row: number, col: number, height: number, width: number) {
-    let divideEastOf = _.random(width-2)
-    let passageAt = _.random(height-1)
+    const divideEastOf = _.random(width-2)
+    const passageAt = _.random(height-1)
 
-    for (var y = 0; y < height; ++y) {
+    for (let y = 0; y < height; ++y) {
       if (passageAt == y)
         continue
-      let cell = this.grid.get(row+y, col+divideEastOf)
+      const cell = this.grid.get(row+y, col+divideEastOf)
       if (cell)
         cell.unlink(cell.east)
     }

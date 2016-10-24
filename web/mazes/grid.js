@@ -41,13 +41,13 @@ export class Cell {
   }
 
   *distances() : Generator<Distances, Distances, void> {
-    let distances = new Distances(this)
-    var frontier = [this]
+    const distances = new Distances(this)
+    let frontier = [this]
     while (frontier.length) {
       yield distances
-      let newFrontier = []
-      for (let cell of frontier) {
-        for (let linked of cell.links) {
+      const newFrontier = []
+      for (const cell of frontier) {
+        for (const linked of cell.links) {
           if (distances.get(linked) !== undefined)
             continue
           distances.set(linked, distances.get(cell)+1)
@@ -60,8 +60,8 @@ export class Cell {
   }
 
   distancesFull() {
-    let dist = this.distances()
-    var res = dist.next()
+    const dist = this.distances()
+    let res = dist.next()
     while (!res.done)
       res = dist.next()
     return res.value
@@ -97,14 +97,14 @@ export class Grid {
   }
 
   *eachRow(): Iterator<Cell[]> {
-    for (let row of this.grid) {
+    for (const row of this.grid) {
       yield row
     }
   }
 
   *eachCell(): Iterator<Cell> {
-    for (let row of this.eachRow()) {
-      for (let cell of row) {
+    for (const row of this.eachRow()) {
+      for (const cell of row) {
         if (cell) {
           yield(cell)
         }
@@ -125,9 +125,9 @@ export class Grid {
   }
 
   configureCells() {
-    for (let cell of this.eachCell()) {
-      let row = cell.row
-      let col = cell.col
+    for (const cell of this.eachCell()) {
+      const row = cell.row
+      const col = cell.col
       cell.north = this.get(row-1, col)
       cell.south = this.get(row+1, col)
       cell.west  = this.get(row, col-1)
@@ -140,8 +140,8 @@ export class Grid {
   }
 
   deadends() {
-    let list = []
-    for (let cell of this.eachCell()) {
+    const list = []
+    for (const cell of this.eachCell()) {
       if (cell.links.length == 1)
         list.push(cell)
     }
@@ -149,15 +149,15 @@ export class Grid {
   }
 
   braid(p: number = 1.0) {
-    for (let cell of _.shuffle(this.deadends())) {
+    for (const cell of _.shuffle(this.deadends())) {
       if (cell.links.length != 1 || Math.random() > p)
         continue
 
-      let neighbors = _.filter(cell.neighbors(), n => !cell.linked(n))
-      var best = _.filter(neighbors, n => n.links.length == 1)
+      const neighbors = _.filter(cell.neighbors(), n => !cell.linked(n))
+      let best = _.filter(neighbors, n => n.links.length == 1)
       if (best.length == 0)
         best = neighbors
-      let neighbor = _.sample(best)
+      const neighbor = _.sample(best)
       cell.link(neighbor)
     }
   }
@@ -168,15 +168,12 @@ export class Grid {
 
   backgroundColorFor(cell: Cell) {
     if (this.distances && this.distances.get(cell) !== undefined) {
-      let distance = this.distances.get(cell)
-      var max = this.distances.maxDistance
+      const distance = this.distances.get(cell)
+      let max = this.distances.maxDistance
       if (max === 0)
         max = 1
 
-      let intensity = Math.round((max - distance) / max * 70) + 20
-      // let dark = Math.round(255 * intensity)
-      // let bright = Math.round(128 + (127 * intensity))
-      // return `rgb(${dark}, ${bright}, ${dark})`
+      const intensity = Math.round((max - distance) / max * 70) + 20
       return `hsl(${this.hue}, ${this.saturation}%, ${intensity}%)`
     }
 

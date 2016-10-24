@@ -28,15 +28,15 @@ export default class Distances {
   }
 
   *pathTo(goalCell: Cell): Generator<Distances, Distances, void> {
-    var current = goalCell
+    let current = goalCell
 
-    let breadcrumbs = new Distances(this.root)
-    let steps = []
+    const breadcrumbs = new Distances(this.root)
+    const steps = []
     breadcrumbs.set(current, this.get(current))
     steps.push(current)
 
     while (current != this.root) {
-      for (let neighbor of current.links) {
+      for (const neighbor of current.links) {
         if (this.get(neighbor) >= this.get(current))
           continue
         breadcrumbs.set(neighbor, this.get(neighbor))
@@ -46,8 +46,8 @@ export default class Distances {
       }
     }
 
-    let path = new Distances(this.root)
-    for (var i = 0; i < steps.length; ++i) {
+    const path = new Distances(this.root)
+    for (let i = 0; i < steps.length; ++i) {
       path.set(steps[steps.length - 1 - i], i)
       yield path
     }
