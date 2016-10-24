@@ -3,28 +3,24 @@ import { Cell } from './grid.js'
 
 export default class Distances {
   root: Cell
-  cells: { [key: string]: number }
+  cells: Map<Cell, number>
   maxDistance: number
 
   constructor(root: Cell) {
     this.root = root
-    this.cells = {}
+    this.cells = new Map()
     this.maxDistance = 0
     this.set(root, 0)
   }
 
-  cellKey(cell: Cell) {
-    return `${cell.row},${cell.col}`
-  }
-
   get(cell: Cell): number {
-    return this.cells[this.cellKey(cell)]
+    return this.cells.get(cell)
   }
 
   set(cell: Cell, distance: number) {
     if (distance > this.maxDistance)
       this.maxDistance = distance
-    this.cells[this.cellKey(cell)] = distance
+    this.cells.set(cell, distance)
   }
 
   *pathTo(goalCell: Cell): Generator<Distances, Distances, void> {
