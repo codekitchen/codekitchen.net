@@ -13,8 +13,13 @@ export default class Distances {
     this.set(root, 0)
   }
 
-  get(cell: Cell): number {
+  get(cell: Cell): ?number {
     return this.cells.get(cell)
+  }
+
+  // call this to assert that we know this cell is set
+  getN(cell: Cell): number {
+    return (this.cells.get(cell): any)
   }
 
   set(cell: Cell, distance: number) {
@@ -28,14 +33,14 @@ export default class Distances {
 
     const breadcrumbs = new Distances(this.root)
     const steps = []
-    breadcrumbs.set(current, this.get(current))
+    breadcrumbs.set(current, this.getN(current))
     steps.push(current)
 
     while (current != this.root) {
       for (const neighbor of current.links) {
-        if (this.get(neighbor) >= this.get(current))
+        if (this.getN(neighbor) >= this.getN(current))
           continue
-        breadcrumbs.set(neighbor, this.get(neighbor))
+        breadcrumbs.set(neighbor, this.getN(neighbor))
         steps.push(neighbor)
         current = neighbor
         break

@@ -2,6 +2,7 @@
 import _ from 'underscore'
 
 import { Grid } from './mazes/grid.js'
+import Distances from './mazes/distances.js'
 import GENERATORS from './mazes/generators.js'
 import canvas2d from './mazes/canvas2d.js'
 
@@ -14,7 +15,12 @@ const canvas : HTMLCanvasElement = (document.getElementById('grid') : any)
 const box = document.getElementById('box')
 const ctx = canvas.getContext("2d")
 
-function doMaze() {
+if (!ctx) {
+  document.write("your browser does not support the HTML Canvas element")
+  throw "doh"
+}
+
+function generateMaze() {
   const cols = Math.min(60, Math.floor(box.clientWidth / MIN_CELL_SIZE))
   const rows = Math.min(60, Math.floor(box.clientHeight / MIN_CELL_SIZE))
   const cellSize = Math.floor(Math.min(box.clientWidth / cols, box.clientHeight / rows))
@@ -33,7 +39,7 @@ function doMaze() {
     mazeDesc.push(`braid: ${pval}`)
   }
 
-  var steps
+  let steps
 
   if (Math.random() > 0.5) {
     const centerx = Math.floor(grid.cols / 2)
@@ -42,8 +48,7 @@ function doMaze() {
     const yjitter = Math.floor(grid.rows / 4)
     const ystart = _.random(-yjitter, yjitter) + centery
     const xstart = _.random(-xjitter, xjitter) + centerx
-    const start = grid.get(ystart, xstart)
-    if (!start) return
+    const start = grid.get(ystart, xstart) || grid.randomCell()
     const distances = start.distancesFull()
     steps = distances.pathTo(grid.get(grid.rows - 1, grid.cols - 1))
     mazeDesc.push('solving')
@@ -55,24 +60,23 @@ function doMaze() {
 
   console.log(mazeDesc.join(' '))
 
-  function doStep() {
-    const step = steps.next()
-    if (!step.value) {
-      setTimeout(doMaze, 4000)
-      return
-    }
-
-    grid.distances = step.value
-    if (!ctx) {
-      document.write("your browser does not support the HTML Canvas element")
-      throw "doh"
-    }
-    canvas2d(grid, ctx, cellSize)
-
-    setTimeout(doStep, 50)
-  }
-
-  doStep()
+  return { cellSize, grid, steps }
 }
 
-doMaze()
+async function mazesForever() {
+  while (true) {
+    const { grid, steps, cellSize } = generateMaze()
+    for (let dist of steps) {
+      grid.distances = dist
+      canvas2d(grid, ctx, cellSize)
+      await sleep(50)
+    }
+    await sleep(3500)
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+mazesForever()
