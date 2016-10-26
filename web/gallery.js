@@ -11,19 +11,22 @@ import Resizer from './gallery/resizer.js'
 import './gallery.css'
 
 const scene = new Scene()
-scene.add(new AmbientLight(0xffffff, 0.5))
+scene.add(new AmbientLight(0xffffff, 1.0))
 
-scene.add(new AxisHelper(4))
+// scene.add(new AxisHelper(4))
 
 const loader = new ColladaLoader()
 loader.options.convertUpAxis = true
-loader.load('room1.dae', model => { model.scene.scale.set(0.0833, 0.0833, 0.0833); scene.add(model.scene)
+loader.load('gallery.dae', model => { model.scene.scale.set(0.0833, 0.0833, 0.0833); scene.add(model.scene)
+  window.model = model
+  console.log(model)
 scene.updateMatrixWorld(true)
 model.scene.traverse(obj => {
 obj.receiveShadow = true
 obj.castShadow = true
 if (obj.material instanceof MeshLambertMaterial) {
-  obj.material = new MeshStandardMaterial({ color: obj.material.color })
+  // the collada importer uses lambert, but that uses per-vertex instead of per-pixel lighting
+  obj.material = new MeshStandardMaterial(_.pick(obj.material, 'color', 'map', 'lightMap', 'lightMapIntensity', 'aoMap', 'aoMapIntensity', 'emissive', 'emissiveMap', 'emissiveIntensity', 'alphaMap', 'envMap', 'refractionRatio', 'fog', 'wireframe', 'wireframeLinewidth', 'wireframeLinecap', 'wireframeLinejoin', 'vertexColors', 'skinning', 'morphTargets', 'morphNormals'))
 }
 })
 scene.traverse(obj => {
