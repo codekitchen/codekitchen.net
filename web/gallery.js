@@ -106,9 +106,9 @@ function animate() {
 animate()
 
 
-function click(event: MouseEvent | Event) {
+function click(event: Event) {
   let clickPos
-  if (event instanceof TouchEvent) {
+  if (window.TouchEvent && event instanceof TouchEvent) {
     clickPos = event.changedTouches.item(0)
   } else if (event instanceof MouseEvent) {
     clickPos = event
