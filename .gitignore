@@ -2,3 +2,4 @@ node_modules
 public/*/index.js
 public/*/*.js.map
 .DS_Store
+*~.skp

@@ -66,15 +66,15 @@ scene.traverse(obj => {
 })
 })
 
-const geometry = new BoxGeometry( 2, 5.666, 2 );
-const material = new MeshStandardMaterial( { color: 0x00ff00 } );
-const cube = new Mesh( geometry, material );
-cube.position.set(10, 5.665/2, -15)
-cube.castShadow = true
-cube.receiveShadow = true
-window.cube = cube
-
-scene.add( cube );
+// const geometry = new BoxGeometry( 2, 5.666, 2 );
+// const material = new MeshStandardMaterial( { color: 0x00ff00 } );
+// const cube = new Mesh( geometry, material );
+// cube.position.set(10, 5.665/2, -15)
+// cube.castShadow = true
+// cube.receiveShadow = true
+// window.cube = cube
+//
+// scene.add( cube );
 
 
 const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000)
@@ -82,7 +82,7 @@ camera.position.set(4, 5.5, -4)
 camera.lookAt(new Vector3(5, 5.5, -6))
 window.camera = camera
 
-const renderer = new WebGLRenderer()
+const renderer = window.renderer = new WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
@@ -101,7 +101,7 @@ function animate() {
     const dir = targetPos.clone().sub(camera.position).normalize().multiplyScalar(0.1)
     camera.position.add(dir)
   }
-  camera.lookAt(cube.position)
+  // camera.lookAt(cube.position)
 
   renderer.render(scene, camera)
 }
@@ -109,14 +109,7 @@ function animate() {
 animate()
 
 
-function click(event: Event) {
-  let clickPos
-  if (window.TouchEvent && event instanceof TouchEvent) {
-    clickPos = event.changedTouches.item(0)
-  } else if (event instanceof MouseEvent) {
-    clickPos = event
-  }
-  if (!clickPos) return
+function click(clickPos: { clientX: number, clientY: number }) {
   const mouse = new Vector2(
     // calculate mouse position in normalized device coordinates
     // (-1 to +1) for both components
@@ -133,5 +126,76 @@ function click(event: Event) {
   }
 }
 
-document.body.addEventListener('mouseup', click, false)
-document.body.addEventListener('touchend', click, false)
+const canvas = renderer.domElement
+let lastX
+let didMove = false
+
+function dragMove(event: MouseEvent) {
+  event.preventDefault()
+  let dy = event.clientX - lastX
+  lastX = event.clientX
+  didMove = true
+
+  // camera.rotateX(dx)
+  camera.rotateY((dy / renderer.getSize().width) * 2)
+}
+function dragStop(event: MouseEvent) {
+  event.preventDefault()
+  canvas.removeEventListener('mousemove', dragMove, false)
+  canvas.removeEventListener('mouseup', dragStop, false)
+  canvas.removeEventListener('mouseout', dragStop, false)
+  if (!didMove) {
+    click(event)
+  }
+}
+function dragStart(event: MouseEvent) {
+  didMove = false
+  event.preventDefault()
+  lastX = event.clientX
+  canvas.addEventListener('mousemove', dragMove, false)
+  canvas.addEventListener('mouseup', dragStop, false)
+  canvas.addEventListener('mouseout', dragStop, false)
+}
+function touchStart(event: TouchEvent) {
+  didMove = false
+  event.preventDefault()
+  const touch = event.touches.item(0)
+  if (!touch) return
+  lastX = touch.clientX
+  canvas.addEventListener('touchmove', touchMove, false)
+  canvas.addEventListener('touchend', touchEnd, false)
+}
+function touchMove(event: TouchEvent) {
+  event.preventDefault()
+  const touch = event.touches.item(0)
+  if (!touch) return
+  let dy = touch.clientX - lastX
+  lastX = touch.clientX
+  didMove = true
+
+  camera.rotateY((dy / renderer.getSize().width) * 2)
+}
+function touchEnd(event: TouchEvent) {
+  event.preventDefault()
+  canvas.removeEventListener('touchmove', touchMove, false)
+  canvas.removeEventListener('touchend', touchEnd, false)
+  const touch = event.changedTouches.item(0)
+  if (!touch) return
+  if (!didMove) {
+    click(touch)
+  }
+}
+canvas.addEventListener('mousedown', dragStart, false)
+canvas.addEventListener('touchstart', touchStart, false)
+
+let lastOrientX = null
+function deviceMoved(event: any) {
+  const evX = event.gamma
+  if (lastOrientX !== null) {
+    const dx = evX - lastOrientX
+    camera.rotation.y = evX * (Math.PI / 180)
+    // console.log(camera.rotation.y)
+  }
+  lastOrientX = evX
+}
+// window.addEventListener('deviceorientation', deviceMoved, false)
