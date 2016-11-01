@@ -30,6 +30,10 @@ find $DEP_DIR -name '*.js' -exec sed -i '' -e '/# sourceMappingURL=/d' {} \; -ex
 green 'Uploading html files'
 aws s3 sync --acl public-read --exclude '*.*' --include '*.html' $DEP_DIR s3://codekitchen.net
 
+green 'Uploading assets'
+aws s3 sync --acl public-read --exclude '*.*' --include '*.dae' $DEP_DIR s3://codekitchen.net
+aws s3 sync --acl public-read $DEP_DIR/gallery/gallery/ s3://codekitchen.net/gallery/gallery/
+
 green 'Uploading js files'
 aws s3 sync --acl public-read --exclude '*.*' --include '*.js' --content-type='application/javascript'  --content-encoding='gzip' --metadata-directive=REPLACE $DEP_DIR s3://codekitchen.net
 
