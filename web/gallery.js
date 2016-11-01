@@ -66,56 +66,78 @@ scene.traverse(obj => {
 })
 })
 
-// const geometry = new BoxGeometry( 2, 5.666, 2 );
-// const material = new MeshStandardMaterial( { color: 0x00ff00 } );
-// const cube = new Mesh( geometry, material );
-// cube.position.set(10, 5.665/2, -15)
-// cube.castShadow = true
-// cube.receiveShadow = true
-// window.cube = cube
-//
-// scene.add( cube );
-
-
 const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000)
 camera.position.set(4, 5.5, -4)
 camera.lookAt(new Vector3(5, 5.5, -6))
 window.camera = camera
 
-const renderer = window.renderer = new WebGLRenderer()
-renderer.setSize(window.innerWidth, window.innerHeight)
+const renderer = window.renderer = new WebGLRenderer({ antialias: false })
+renderer.setPixelRatio(Math.floor(window.devicePixelRatio))
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
 
 document.body.appendChild(renderer.domElement)
 
-const resizer = new Resizer(renderer, camera)
-
 const raycaster = new Raycaster()
+
+// webvr
+import 'webvr-polyfill/src/main'
+import VRControls from './webvr/VRControls'
+import VREffect from './webvr/VREffect'
+
+let inVR = false
+const controls = new VRControls(camera, console.log)
+const effect = window.effect = new VREffect(renderer, console.log)
+effect.setSize(window.innerWidth, window.innerHeight)
+
+document.querySelector("#controls #vr-mode").addEventListener('click', (event) => {
+  event.preventDefault()
+  effect.setFullScreen(true)
+  controls.usePoseOrientation = true
+  inVR = true
+}, false)
+
+const resizer = new Resizer(effect, camera)
 let targetPos
 
 function animate() {
-  window.requestAnimationFrame(animate)
+  effect.requestAnimationFrame(animate)
+
+  const display = effect.getVRDisplay()
+  const canVR = !inVR && display && display.capabilities.canPresent
+  if (canVR) {
+    document.querySelector('#controls').style.display = 'block'
+  } else {
+    document.querySelector('#controls').style.display = 'none'
+  }
 
   if (targetPos && camera.position.distanceToSquared(targetPos) > 0.01) {
     const dir = targetPos.clone().sub(camera.position).normalize().multiplyScalar(0.1)
     camera.position.add(dir)
   }
-  // camera.lookAt(cube.position)
+  controls.update()
 
-  renderer.render(scene, camera)
+  if (effect)
+    effect.render(scene, camera)
+  else
+    renderer.render(scene, camera)
 }
 
 animate()
 
 
 function click(clickPos: { clientX: number, clientY: number }) {
-  const mouse = new Vector2(
-    // calculate mouse position in normalized device coordinates
-    // (-1 to +1) for both components
-    ( clickPos.clientX / window.innerWidth ) * 2 - 1,
-    - ( clickPos.clientY / window.innerHeight ) * 2 + 1
-  )
+  let mouse: Vector2
+  if (inVR) {
+    mouse = new Vector2(0, 0)
+  } else {
+    mouse = new Vector2(
+      // calculate mouse position in normalized device coordinates
+      // (-1 to +1) for both components
+      ( clickPos.clientX / window.innerWidth ) * 2 - 1,
+      - ( clickPos.clientY / window.innerHeight ) * 2 + 1
+    )
+  }
   raycaster.setFromCamera( mouse, camera )
   const intersects = raycaster.intersectObjects( scene.children, true)
   const floor = _.find(intersects, i => { return i.object instanceof Mesh })
@@ -187,15 +209,3 @@ function touchEnd(event: TouchEvent) {
 }
 canvas.addEventListener('mousedown', dragStart, false)
 canvas.addEventListener('touchstart', touchStart, false)
-
-let lastOrientX = null
-function deviceMoved(event: any) {
-  const evX = event.gamma
-  if (lastOrientX !== null) {
-    const dx = evX - lastOrientX
-    camera.rotation.y = evX * (Math.PI / 180)
-    // console.log(camera.rotation.y)
-  }
-  lastOrientX = evX
-}
-// window.addEventListener('deviceorientation', deviceMoved, false)

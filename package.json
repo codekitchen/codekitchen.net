@@ -23,7 +23,8 @@
     "three": "^0.81.2",
     "three-collada-loader": "0.0.1",
     "underscore": "^1.8.3",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webvr-polyfill": "^0.9.22"
   },
   "devDependencies": {
     "flow-bin": "^0.33.0",
