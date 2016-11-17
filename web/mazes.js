@@ -6,7 +6,7 @@ import Distances from './mazes/distances.js'
 import GENERATORS from './mazes/generators.js'
 import canvas2d from './mazes/canvas2d.js'
 
-import './main.css'
+import './mazes.css'
 
 const MIN_CELL_SIZE = 25
 
