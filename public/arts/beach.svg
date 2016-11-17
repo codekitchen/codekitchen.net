@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient-0" gradientUnits="userSpaceOnUse" x1="249.748" y1="-0.288" x2="249.748" y2="499.783" gradientTransform="matrix(0.999992, 0.004053, -0.004044, 0.997978, 0.000915, 3.032338)" spreadMethod="pad">
+      <stop offset="0" style="stop-color: rgb(172, 152, 199);"/>
+      <stop offset="0.701" style="stop-color: rgb(206, 178, 212);"/>
+      <stop offset="1" style="stop-color: rgb(253, 253, 253);"/>
+    </linearGradient>
+    <linearGradient id="gradient-1" gradientUnits="userSpaceOnUse" x1="250" y1="314.215" x2="250" y2="499.782" gradientTransform="matrix(1, 0, 0, 1, 0.000016, 0)">
+      <stop offset="0" style="stop-color: rgb(150, 168, 214);"/>
+      <stop offset="1" style="stop-color: rgb(179, 216, 214);"/>
+    </linearGradient>
+    <linearGradient id="gradient-3" gradientUnits="userSpaceOnUse" x1="250.506" y1="401.69" x2="250.506" y2="502.816" gradientTransform="matrix(1, 0, 0, 1, 0, 0)">
+      <stop offset="0" style="stop-color: rgb(72, 128, 120);"/>
+      <stop offset="1" style="stop-color: rgb(139, 199, 236);"/>
+    </linearGradient>
+    <linearGradient id="gradient-2" gradientUnits="userSpaceOnUse" x1="250.506" y1="401.69" x2="250.506" y2="502.816" gradientTransform="matrix(1, 0, 0, 1, 73.316818, -106.435669)">
+      <stop offset="0" style="stop-color: rgb(72, 128, 120);"/>
+      <stop offset="1" style="stop-color: rgb(139, 199, 236);"/>
+    </linearGradient>
+    <linearGradient id="gradient-4" gradientUnits="userSpaceOnUse" x1="270.984" y1="413.825" x2="270.984" y2="460.343" gradientTransform="matrix(0.999999, 0, 0, 1, 0.000233, 0)">
+      <stop offset="0" style="stop-color: rgb(162, 204, 220);"/>
+      <stop offset="1" style="stop-color: rgb(105, 157, 173);"/>
+    </linearGradient>
+  </defs>
+  <rect x="-0.288" y="-0.288" width="500.071" height="500.071" style="fill: url(#gradient-0);"/>
+  <g transform="matrix(1, 0, 0, 1, 4.045062, 167.870087)">
+    <ellipse cx="144.323" cy="127.131" rx="63.962" ry="63.962" style="fill: rgb(210, 210, 210); fill-opacity: 0.2;"/>
+    <ellipse cx="144.071" cy="127.383" rx="53.85" ry="53.85" style="fill: rgb(216, 216, 216); fill-opacity: 0.15;"/>
+    <ellipse cx="144.071" cy="127.385" rx="43.737" ry="43.737" style="fill: rgb(220, 220, 220); fill-opacity: 0.25;"/>
+    <ellipse cx="144.323" cy="127.131" rx="33.372" ry="33.372" style="fill-opacity: 0.95; fill: rgb(255, 255, 255);"/>
+  </g>
+  <path d="M 0.217 284.383 L 10.33 288.934 L 26.51 289.439 L 38.14 296.518 L 53.814 300.563 L 72.523 304.608 L 79.096 293.484 L 87.186 297.529 L 98.31 299.552 L 129.659 297.024 L 150.39 289.439 L 163.031 297.529 C 163.031 297.529 167.582 307.642 168.087 307.642 C 168.592 307.642 210.561 308.653 210.561 308.653 L 221.685 305.114 L 286.911 303.091 L 296.518 306.125 L 311.687 310.676 L 358.711 299.046 C 358.711 299.046 365.79 298.541 365.79 299.046 C 365.79 299.551 378.936 303.091 379.442 303.597 C 379.948 304.103 393.094 308.148 393.094 308.148 C 393.094 308.148 405.735 307.136 405.735 306.631 C 405.735 306.126 411.802 301.575 412.308 301.575 C 412.814 301.575 431.522 301.575 431.522 301.069 C 431.522 300.563 435.567 297.024 435.567 297.024 L 442.14 296.013 L 448.714 290.956 C 448.714 290.956 451.242 290.451 452.759 291.462 C 454.276 292.473 457.815 297.024 458.321 297.024 C 458.827 297.024 467.422 298.541 467.422 298.541 C 467.422 298.541 477.535 289.439 479.052 289.945 C 480.569 290.451 492.198 298.541 492.704 298.541 C 493.21 298.541 499.783 298.541 499.783 298.541 L 499.782 315.227 L 0.218 314.216 L 0.217 284.383 Z" style="fill: rgb(199, 207, 215);"/>
+  <rect x="-0.288" y="314.215" width="500.576" height="185.567" style="fill: url(#gradient-1);"/>
+  <path d="M 499.276 314.468 L 499.782 347.839 L 94.771 314.468 L 499.276 314.468 Z" style="fill: url(#gradient-2); fill-opacity: 0.6;"/>
+  <path d="M 500.288 451.747 L 40.668 460.343 L 499.783 413.825 C 499.783 413.825 501.299 452.253 500.288 451.747 Z" style="fill: url(#gradient-4); fill-opacity: 0.6;"/>
+  <path d="M 0.217 401.69 L 499.783 500.288 L 0.218 500.288 L 0.217 401.69 Z" style="fill: url(#gradient-3); fill-opacity: 0.6;"/>
+  <path d="M 520.513 310.17" style="fill: none; stroke: black;"/>
+  <path d="M -6.356 229.775 L 502.311 224.718 L -7.367 256.068 C -7.367 256.068 -5.85 230.28 -6.356 229.775 Z" style="fill: rgb(255, 255, 255); fill-opacity: 0.31;"/>
+</svg>
