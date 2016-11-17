@@ -33,7 +33,7 @@ aws s3 sync --acl public-read --exclude '*.*' --include '*.html' $DEP_DIR s3://c
 green 'Uploading assets'
 aws s3 sync --acl public-read --exclude '*.*' --include '*.dae' $DEP_DIR s3://codekitchen.net
 aws s3 sync --acl public-read $DEP_DIR/gallery/gallery/ s3://codekitchen.net/gallery/gallery/
-aws s3 sync --acl public-read $DEP_DIR/arts/ s3://codekitchen.net/arts/
+aws s3 sync --acl public-read $DEP_DIR/images/ s3://codekitchen.net/images/
 
 green 'Uploading js files'
 aws s3 sync --acl public-read --exclude '*.*' --include '*.js' --content-type='application/javascript'  --content-encoding='gzip' --metadata-directive=REPLACE $DEP_DIR s3://codekitchen.net

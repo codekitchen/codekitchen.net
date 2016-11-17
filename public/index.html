@@ -22,13 +22,27 @@
     }
     object[type="image/svg+xml"] {
       border: 1px solid #555;
-      width: 90vmin;
-      height: 90vmin;
+      width: 85vmin;
+      height: 85vmin;
+    }
+    footer {
+      margin-top: 0.7em;
+      text-align: center;
+    }
+    footer > a {
+      padding-right: 0.7em;
     }
     </style>
   </head>
   <body>
-    <object id=sunset type="image/svg+xml" data="arts/kentucky.svg">
-    </object>
+    <div id=main>
+      <object id=sunset type="image/svg+xml" data="images/kentucky.svg">
+      </object>
+      <footer id=links>
+        <a href="https://github.com/codekitchen"><img src="images/GitHub-Mark-Light-120px-plus.png" height=32 /></a>
+        <a href="https://www.linkedin.com/in/brian-palmer-011a513"><img src="images/In-White-128px-R.png" height=32 /></a>
+        <a href="mailto:brian@codekitchen.net"><img src="images/white-email-icon-png-u1nhol7t.png" height=32 /></a>
+      </footer>
+    </div>
   </body>
 </html>
