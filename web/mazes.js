@@ -41,7 +41,7 @@ function generateMaze() {
 
   let steps
 
-  if (Math.random() > 0.5) {
+  if (Math.random() > 0.95) {
     const centerx = Math.floor(grid.cols / 2)
     const xjitter = Math.floor(grid.cols / 4)
     const centery = Math.floor(grid.rows / 2)
