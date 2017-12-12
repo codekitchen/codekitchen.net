@@ -10,6 +10,7 @@
     .tree {
       transition: transform 0.5s;
       transition-timing-function: linear;
+      transform-box: fill-box;
       transform-origin: 50% 50%;
     }
     .tree-right:hover {
