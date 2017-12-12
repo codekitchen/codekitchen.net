@@ -15,7 +15,7 @@ const canvas : HTMLCanvasElement = (document.getElementById('grid') : any)
 const box = document.getElementById('box')
 const ctx = canvas.getContext("2d")
 
-if (!ctx) {
+if (!ctx || !box) {
   document.write("your browser does not support the HTML Canvas element")
   throw "doh"
 }

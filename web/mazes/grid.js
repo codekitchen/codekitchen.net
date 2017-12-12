@@ -59,7 +59,7 @@ export class Cell {
     return distances
   }
 
-  distancesFull() {
+  distancesFull() : Distances {
     const dist = this.distances()
     let res = dist.next()
     while (!res.done)
