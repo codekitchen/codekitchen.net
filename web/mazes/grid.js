@@ -2,6 +2,7 @@
 import _ from 'underscore'
 
 import Distances from './distances.js'
+import { assert } from '../flow';
 
 export class Cell {
   row: number
@@ -64,7 +65,7 @@ export class Cell {
     let res = dist.next()
     while (!res.done)
       res = dist.next()
-    return res.value
+    return assert(res.value)
   }
 }
 

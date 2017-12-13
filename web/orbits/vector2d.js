@@ -6,7 +6,7 @@ export default class Vector2D {
 
   static zero: Vector2D = new Vector2D(0, 0)
 
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number): void {
     this.x = x
     this.y = y
   }
@@ -18,7 +18,7 @@ export default class Vector2D {
     return new Vector2D(this.x + v2.x, this.y + v2.y)
   }
 
-  subtract(v2: Vector2D) {
+  subtract(v2: Vector2D | number) {
     if (typeof v2 === 'number') {
       return new Vector2D(this.x - v2, this.y - v2)
     }

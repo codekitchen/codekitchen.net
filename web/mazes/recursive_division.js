@@ -8,7 +8,7 @@ export default class RecursiveDivision {
   maxRoomSize: number
   roomPct: number
 
-  static on(grid) {
+  static on(grid: Grid) {
     (new RecursiveDivision(grid)).run()
   }
 

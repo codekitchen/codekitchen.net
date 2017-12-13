@@ -6,6 +6,7 @@ import ColladaLoader from 'three-collada-loader'
 
 import _ from 'underscore'
 
+import { assert } from './flow.js'
 import Resizer from './gallery/resizer.js'
 
 import './gallery.css'
@@ -76,7 +77,7 @@ renderer.setPixelRatio(Math.floor(window.devicePixelRatio))
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
 
-document.body.appendChild(renderer.domElement)
+assert(document.body).appendChild(renderer.domElement)
 
 const raycaster = new Raycaster()
 
@@ -90,12 +91,14 @@ const controls = new VRControls(camera, console.log)
 const effect = window.effect = new VREffect(renderer, console.log)
 effect.setSize(window.innerWidth, window.innerHeight)
 
-document.querySelector("#controls #vr-mode").addEventListener('click', (event) => {
+const vrModeControl: HTMLElement = assert(document.querySelector("#controls #vr-mode"))
+function vrModeClickEvent(event: MouseEvent) {
   event.preventDefault()
   effect.setFullScreen(true)
   controls.usePoseOrientation = true
   inVR = true
-}, false)
+}
+vrModeControl.addEventListener('click', vrModeClickEvent, false)
 
 const resizer = new Resizer(effect, camera)
 let targetPos
@@ -105,10 +108,11 @@ function animate() {
 
   const display = effect.getVRDisplay()
   const canVR = !inVR && display && display.capabilities.canPresent
+  const controlsEl = assert(document.querySelector('#controls'))
   if (canVR) {
-    document.querySelector('#controls').style.display = 'block'
+    controlsEl.style.display = 'block'
   } else {
-    document.querySelector('#controls').style.display = 'none'
+    controlsEl.style.display = 'none'
   }
 
   if (targetPos && camera.position.distanceToSquared(targetPos) > 0.01) {

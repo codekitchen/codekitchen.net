@@ -1,8 +1,9 @@
 // @flow
 import _ from 'underscore'
+import { Grid } from './grid';
 
 export default class HuntAndKill {
-  static on(grid) {
+  static on(grid: Grid) {
     let cur = grid.randomCell()
 
     while (cur) {

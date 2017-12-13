@@ -3,9 +3,10 @@
 import './orbits.css'
 
 import Vector2D from './orbits/vector2d.js'
+import { setInterval } from 'timers';
 
 // trust that we know this is a canvas element
-const canvas : HTMLCanvasElement = (document.getElementById('canvas') : any)
+const canvas : HTMLCanvasElement = document.getElementById('canvas')
 const box = document.getElementById('box')
 const ctx = canvas.getContext("2d")
 
@@ -163,8 +164,6 @@ function update() {
 }
 
 function draw() {
-  update()
-
   const width = box.clientWidth
   const height = box.clientHeight
 
@@ -220,5 +219,5 @@ function onWheelEvent(ev: WheelEvent) {
   if (zoom > 100000) zoom = 100000
 }
 
-
-draw()
+window.setInterval(update, 1000/30)
+window.requestAnimationFrame(draw)

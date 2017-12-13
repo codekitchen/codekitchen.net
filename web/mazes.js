@@ -7,6 +7,7 @@ import GENERATORS from './mazes/generators.js'
 import canvas2d from './mazes/canvas2d.js'
 
 import './mazes.css'
+import { assert } from './flow';
 
 const MIN_CELL_SIZE = 25
 
@@ -50,7 +51,7 @@ function generateMaze() {
     const xstart = _.random(-xjitter, xjitter) + centerx
     const start = grid.get(ystart, xstart) || grid.randomCell()
     const distances = start.distancesFull()
-    steps = distances.pathTo(grid.get(grid.rows - 1, grid.cols - 1))
+    steps = distances.pathTo(assert(grid.get(grid.rows - 1, grid.cols - 1)))
     mazeDesc.push('solving')
   } else {
     const start = grid.randomCell()
