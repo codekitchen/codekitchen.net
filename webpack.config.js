@@ -8,6 +8,10 @@ module.exports = {
       gallery: [
         "babel-polyfill",
         "./web/gallery.js"
+      ],
+      orbits: [
+        "babel-polyfill",
+        "./web/orbits.js"
       ]
     },
     output: {
