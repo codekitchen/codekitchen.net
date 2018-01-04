@@ -2,12 +2,12 @@
 import { Scene, PerspectiveCamera, WebGLRenderer, AmbientLight, SpotLight, Vector3, AxisHelper, PCFSoftShadowMap, SpotLightHelper, MeshLambertMaterial } from 'three'
 import { BoxGeometry, MeshStandardMaterial, Mesh } from 'three'
 import { Raycaster, Vector2 } from 'three'
-import ColladaLoader from 'three-collada-loader'
+import { ColladaLoader } from './gallery/collada_loader'
 
 import _ from 'underscore'
 
 import { assert } from './flow.js'
-import Resizer from './gallery/resizer.js'
+import Resizer from './gallery/resizer'
 
 import './gallery.css'
 
@@ -16,9 +16,13 @@ scene.add(new AmbientLight(0xffffff, 1.0))
 
 // scene.add(new AxisHelper(4))
 
+let filename = {
+  '?dining': 'dining.dae',
+}[window.location.search] || 'gallery.dae'
+
 const loader = new ColladaLoader()
 loader.options.convertUpAxis = true
-loader.load('gallery.dae', model => { model.scene.scale.set(0.0833, 0.0833, 0.0833); scene.add(model.scene)
+loader.load(filename, model => { model.scene.scale.set(0.0833, 0.0833, 0.0833); scene.add(model.scene)
   window.model = model
   console.log(model)
 scene.updateMatrixWorld(true)
@@ -85,6 +89,7 @@ const raycaster = new Raycaster()
 import 'webvr-polyfill/src/main'
 import VRControls from './webvr/VRControls'
 import VREffect from './webvr/VREffect'
+import { setTimeout, clearTimeout } from 'timers';
 
 let inVR = false
 const controls = new VRControls(camera, console.log)
@@ -101,7 +106,7 @@ function vrModeClickEvent(event: MouseEvent) {
 vrModeControl.addEventListener('click', vrModeClickEvent, false)
 
 const resizer = new Resizer(effect, camera)
-let targetPos
+let targetPos = camera.position.clone()
 
 function animate() {
   effect.requestAnimationFrame(animate)
@@ -115,7 +120,7 @@ function animate() {
     controlsEl.style.display = 'none'
   }
 
-  if (targetPos && camera.position.distanceToSquared(targetPos) > 0.01) {
+  if (camera.position.distanceToSquared(targetPos) > 0.01) {
     const dir = targetPos.clone().sub(camera.position).normalize().multiplyScalar(0.1)
     camera.position.add(dir)
   }
@@ -155,6 +160,18 @@ function click(clickPos: { clientX: number, clientY: number }) {
 const canvas = renderer.domElement
 let lastX
 let didMove = false
+const crouchAmount = 4.0
+let didCrouch = false
+let croucher = null
+
+function doCrouch() {
+  if (didMove) return
+  didMove = didCrouch = true
+  targetPos.y -= crouchAmount
+}
+function unCrouch() {
+  targetPos.y += crouchAmount
+}
 
 function dragMove(event: MouseEvent) {
   event.preventDefault()
@@ -173,23 +190,31 @@ function dragStop(event: MouseEvent) {
   if (!didMove) {
     click(event)
   }
+  if (croucher) {
+    clearTimeout(croucher)
+  }
+  if (didCrouch) {
+    unCrouch()
+  }
 }
 function dragStart(event: MouseEvent) {
-  didMove = false
+  didMove = didCrouch = false
   event.preventDefault()
   lastX = event.clientX
   canvas.addEventListener('mousemove', dragMove, false)
   canvas.addEventListener('mouseup', dragStop, false)
   canvas.addEventListener('mouseout', dragStop, false)
+  croucher = setTimeout(doCrouch, 1000)
 }
 function touchStart(event: TouchEvent) {
-  didMove = false
+  didMove = didCrouch = false
   event.preventDefault()
   const touch = event.touches.item(0)
   if (!touch) return
   lastX = touch.clientX
   canvas.addEventListener('touchmove', touchMove, false)
   canvas.addEventListener('touchend', touchEnd, false)
+  croucher = setTimeout(doCrouch, 1000)
 }
 function touchMove(event: TouchEvent) {
   event.preventDefault()
@@ -209,6 +234,12 @@ function touchEnd(event: TouchEvent) {
   if (!touch) return
   if (!didMove) {
     click(touch)
+  }
+  if (croucher) {
+    clearTimeout(croucher)
+  }
+  if (didCrouch) {
+    unCrouch()
   }
 }
 canvas.addEventListener('mousedown', dragStart, false)
