@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recurse Center</title>
+  <style>
+    body {
+      background-color: #111;
+      line-height: 1.25;
+      font-size: 18px;
+      color: #ddd;
+      margin: 2em;
+      max-width: 40em;
+    }
+    :link, :visited {
+      color: #ddd;
+    }
+    article > a img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Recurse Center</h1>
+  <p>I'm attending the <a href="https://www.recurse.com">Recurse Center</a> from September to December 2024. There's so much I could write about the program, it's been an amazing experience. But I don't want to use too much of my all-too-short 12 week time there updating my web site, a task made all the harder because I haven't touched my web site in 10 years. So for now this is a simple timeline gallery of some of the projects I've been working on.</p>
+  <p>That said, my favorite thing about Recurse has been  meeting so many amazing people, and joining them to work on <em>their</em> passion projects. So this simple gallery of my own projects is missing out on a lot of the magic.</p>
+  <p>I'll continue to update this page with new projects during my time at Recurse.</p>
+
+  <h2>Games</h2>
+  <article>
+  <h3>Co-op Tetris</h3>
+  <a href="https://roundgame.codekitchen.net"><img src="images/recurse/roundgame.png" height="250" /></a>
+  <p>I love thinking of ways for strangers to interact over the internet and have a good time. Coming up with ways to avoid feeding the trolls isn't easy, of course.</p>
+  <p>So I had this weird idea to take the most cloned game of all time and put a new twist on it: round-robin co-op. Visit the site with others and you'll be thrown into the same game. Each time the player drops a piece, control passes to the next player. You'll have to work together to score points.</p>
+  <p>While my original idea was for this to be a global playground, this is actually a ton of fun to play with others while on a video call. So I may add the ability to create a private game and send the join link to others.</p>
+  <p>Developing the game itself has been a great way to pair with lots of other people at Recurse and have an awesome time. <a href="https://github.com/codekitchen/round_game">The code is on GitHub</a>. The server is written in Go, the client is Typescript.</p>
+  </article>
+
+  <article>
+  <h3>Tramplevania</h3>
+  <a href="https://codekitchen.github.io/generative/tramplevania/tramplevania.html"><img src="images/recurse/tramplevania.png" height="200" /></a>
+  <p>A group of us had a game jam during the 5th week. It was awesome seeing the huge variety of gameplay, ideas, and technologies. This was in mid-October, the theme was "sp00ky". I ended up recruiting my 5-year-old to be game designer and he had a very specific vision for a game involving monsters on trampolines, with the monster changing on each bounce. There was a lot of back-and-forth, he was not willing to compromise his vision.</p>
+  <p>I used Pico-8 and paired on this with quite a few people over the two days, it was a blast. I love local co-op games, though this can also be played solo if you are up for controlling both trampolines at the same time.</p>
+  </article>
+
+  <h2>Workout History Viewer</h2>
+  <article>
+  <a href="https://codekitchen.github.io/generative/workouts.html"><img src="images/recurse/workouts.png" height="350" /></a>
+  <p>I wanted to visualize all my recorded bike rides on one map, and couldn't find an existing tool that could do that. I figured out how to export my entire workout history from Apple Health, and hooked it up to an OpenStreetMap view.</p>
+  <p>The image above links to the live site, but it needs instructions on how to export your data set and get it onto your computer where you can open the entire folder of .gpx workout recordings. It only works in browsers such as Chrome that support <em>window.showDirectoryPicker()</em></p>
+  <p>The end result is a lot of fun to browse around, though.</p>
+  </article>
+
+
+  <h2>Creative Coding</h2>
+  <p>I've been joining a group doing weekly creative coding projects: we come up with a prompt, and then we all take 90 minutes to make whatever inspires us from the prompt. Or ignore the prompt completely and make whatever you are feeling. In groups or solo. I look forward to this every week, it's a blast. 90 minutes is such a tight time constrant, it really forces you to focus!</p>
+  <p>I've also been working on a few other generative art projects unrelated to the weekly meetup.</p>
+
+  <article>
+    <h3>Alien Skies</h3>
+    <a href="https://codekitchen.github.io/generative/sky.html"><img src="images/recurse/sky.png" height="150" /></a>
+    <p>Inspired by the amazing generative art work of <a href="https://frankforce.com">Frank Force</a>. Roll to generate a new scene.</p>
+  </article>
+
+  <article>
+    <h3>Gumball Constraints</h3>
+    <a href="https://codekitchen.github.io/generative/constraints.html"><img src="images/recurse/constraints.png" height="150" /></a>
+    <p>I made this little toy after reading <a href="https://zalo.github.io/blog/constraints/">this blog post</a> on Verlet integration, a physics solver technique I hadn't heard of before. Mobile friendly, to entertain the kid!</p>
+  </article>
+
+  <article>
+    <h3>Cold Fingers</h3>
+    <a href="https://codekitchen.github.io/generative/cold-fingers/"><img src="images/recurse/cold_fingers.png" height="150" /></a>
+    <p>The prompt was "cold fingers". I decided to practice my rusty pixel art skills and play with CSS cursors.</p>
+  </article>
+
+  <article>
+    <h3>Train Switching</h3>
+    <a href="https://codekitchen.github.io/generative/train-switching/"><img src="images/recurse/trains.png" height="150" /></a>
+    <p>The prompt was "switching trains". I couldn't decide at first if that meant a person switching between trains, or trains switching tracks. Eventually I  made a random metro generator inspired by the art style of <a href="https://dinopoloclub.com/games/mini-metro/">Mini Metro</a>. Refresh to generate a new layout.</p>
+  </article>
+
+  <article>
+    <h3>Music Beat Detection</h3>
+    <a href="https://codekitchen.github.io/generative/audio-game/audio-game.html"><img src="images/recurse/beats.png" height="150" /></a>
+    <p>I've never done any audio programming before. I decided to learn about detecting the beat of music. I constrained myself to do it in real-time to eventually support microphone input, which limited the algorithms I could use since many want to analyze the whole song at once.</p>
+  </article>
+</body>
+</html>
